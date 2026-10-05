@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Instagram PC Clone</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgb(214, 227, 231);
+    color: #111;
+}
+
+/* ================= MAIN LAYOUT ================= */
+
+.page {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================= LEFT SIDEBAR ================= */
+
+.sidebar {
+    width: 245px;
+    height: 100vh;
+    background: rgb(61, 58, 58);
+    border-right: 1px solid #ddd;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 30px 18px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.logo {
+    font-family: cursive;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0 12px 35px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-item {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+
+}
+
+.menu-item:hover {
+    background: #1e1d1d;
+}
+
+.menu-item.active {
+    font-weight: bold;
+
+}
+
+.menu-icon {
+    width: 25px;
+    font-size: 23px;
+    text-align: center;
+}
+
+.bottom-menu {
+    margin-top: auto;
+}
+
+/* ================= CONTENT ================= */
+
+.content {
+    margin-left: 245px;
+    width: calc(100% - 245px);
+    display: flex;
+    justify-content: center;
+    gap: 55px;
+    padding: 35px 40px;
+}
+
+/* ================= CENTER FEED ================= */
+
+.feed {
+    width: 630px;
+}
+
+.stories {
+    width: 100%;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.story {
+    min-width: 70px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.story-ring {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(
+        45deg,
+        #feda75,
+        #fa7e1e,
+        #d62976,
+        #962fbf,
+        #4f5bd5
+    );
+}
+
+.story-ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+}
+
+.story-name {
+    font-size: 12px;
+    margin-top: 7px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* ================= POST ================= */
+
+.post {
+    margin-top: 25px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.post-header {
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.location {
+    font-size: 12px;
+    color: #777;
+    margin-top: 3px;
+}
+
+.more {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.post-image {
+    width: 100%;
+    height: 620px;
+    object-fit: cover;
+    display: block;
+}
+
+/* ================= POST ACTIONS ================= */
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 15px 5px;
+}
+
+.action-left {
+    display: flex;
+    gap: 18px;
+}
+
+.action {
+    font-size: 25px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.action:hover {
+    transform: scale(1.1);
+}
+
+.liked {
+    color: red;
+}
+
+.post-details {
+    padding: 5px 15px 18px;
+}
+
+.like-count {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.caption {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.caption b {
+    margin-right: 5px;
+}
+
+.comments {
+    color: #888;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+/* ================= COMMENT ================= */
+
+.comment-area {
+    display: flex;
+    border-top: 1px solid #eee;
+    margin-top: 12px;
+    padding-top: 10px;
+}
+
+.comment-area input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.comment-area button {
+    border: none;
+    background: none;
+    color: #0095f6;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ================= RIGHT SIDEBAR ================= */
+
+.right-sidebar {
+    width: 310px;
+    padding-top: 10px;
+}
+
+.my-profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-img {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.real-name {
+    color: #888;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.switch {
+    color: #0095f6;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.suggest-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.suggest-title span:first-child {
+    color: #888;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.suggest-title span:last-child {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.suggestion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 18px 0;
+}
+
+.suggest-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suggest-user img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.suggest-name {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.suggest-info {
+    font-size: 11px;
+    color: #999;
+    margin-top: 4px;
+}
+
+.follow {
+    border: none;
+    background: none;
+    color: #0095f6;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+    margin-top: 35px;
+    color: #aaa;
+    font-size: 11px;
+    line-height: 2;
+}
+
+/* ================= CREATE POST ================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    width: 450px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modal-title {
+    padding: 18px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.modal-content {
+    padding: 25px;
+}
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+}
+
+.share-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    background: #0095f6;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ================= SEARCH BOX ================= */
+
+.search-box {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.search-box input {
+    width: 270px;
+    padding: 11px 18px;
+    border: none;
+    background: #efefef;
+    border-radius: 8px;
+    outline: none;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1200px) {
+
+    .right-sidebar {
+        display: none;
+    }
+
+    .content {
+        justify-content: center;
+    }
+
+}
+
+@media(max-width:850px) {
+
+    .sidebar {
+        width: 75px;
+        padding: 25px 10px;
+    }
+
+    .logo {
+        font-size: 0;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .logo::after {
+        content: "◎";
+        font-size: 30px;
+    }
+
+    .menu-item {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .menu-item span:not(.menu-icon) {
+        display: none;
+    }
+
+    .content {
+        margin-left: 75px;
+        width: calc(100% - 75px);
+        padding: 25px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<!-- =====================================================
+                    LEFT SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+        Instagram
+    </div>
+
+    <div class="menu">
+
+        <div class="menu-item active">
+            <span class="menu-icon">🏠</span>
+            <span>Home</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="menu-icon">🔍</span>
+            <span>Search</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="menu-icon">🧭</span>
+            <span>Explore</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="menu-icon">🎬</span>
+            <span>Reels</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="menu-icon">💬</span>
+            <span>Messages</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="menu-icon">❤️</span>
+            <span>Notifications</span>
+        </div>
+
+        <div
+            class="menu-item"
+            onclick="openModal()"
+        >
+            <span class="menu-icon">➕</span>
+            <span>Create</span>
+        </div>
+
+        <div class="menu-item">
+            <span class="menu-icon">👤</span>
+            <span>Profile</span>
+        </div>
+
+    </div>
+
+    <div class="bottom-menu">
+
+        <div class="menu-item">
+            <span class="menu-icon">☰</span>
+            <span>More</span>
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+                    MAIN CONTENT
+===================================================== -->
+
+<main class="content">
+
+    <!-- ================= FEED ================= -->
+
+    <section class="feed">
+
+        <!-- STORIES -->
+
+        <div class="stories">
+
+            <div class="story">
+                <div class="story-ring">
+                    <img src="https://i.pravatar.cc/100?img=12">
+                </div>
+                <div class="story-name">Your story</div>
+            </div>
+
+            <div class="story">
+                <div class="story-ring">
+                    <img src="https://i.pravatar.cc/100?img=1">
+                </div>
+                <div class="story-name">virat</div>
+            </div>
+
+            <div class="story">
+                <div class="story-ring">
+                    <img src="https://i.pravatar.cc/100?img=2">
+                </div>
+                <div class="story-name">dhoni</div>
+            </div>
+
+            <div class="story">
+                <div class="story-ring">
+                    <img src="https://i.pravatar.cc/100?img=3">
+                </div>
+                <div class="story-name">rahul</div>
+            </div>
+
+            <div class="story">
+                <div class="story-ring">
+                    <img src="https://i.pravatar.cc/100?img=4">
+                </div>
+                <div class="story-name">travel</div>
+            </div>
+
+            <div class="story">
+                <div class="story-ring">
+                    <img src="https://i.pravatar.cc/100?img=5">
+                </div>
+                <div class="story-name">friends</div>
+            </div>
+
+            <div class="story">
+                <div class="story-ring">
+                    <img src="https://i.pravatar.cc/100?img=6">
+                </div>
+                <div class="story-name">sports</div>
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+                            POST 1
+        ================================================= -->
+
+        <article class="post">
+
+            <div class="post-header">
+
+                <div class="user">
+
+                    <img
+                        class="user-img"
+                        src="https://i.pravatar.cc/100?img=12"
+                    >
+
+                    <div>
+
+                        <div class="username">
+                            lohith_1.43
+                        </div>
+
+                        <div class="location">
+                            Ahemadabad, India
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="more">
+                    ⋯
+                </div>
+
+            </div>
+
+            <img
+                class="post-image"
+                src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+            >
+
+            <div class="actions">
+
+                <div class="action-left">
+
+                    <span
+                        class="action"
+                        onclick="like(this)"
+                    >
+                        ♡
+                    </span>
+
+                    <span class="action">
+                        💬
+                    </span>
+
+                    <span class="action">
+                        ✈️
+                    </span>
+
+                </div>
+
+                <span class="action">
+                    🔖
+                </span>
+
+            </div>
+
+            <div class="post-details">
+
+                <div class="like-count">
+                    1,245 likes
+                </div>
+
+                <div class="caption">
+                    <b>lohith_1.43</b>
+                    Exploring new places and enjoying the journey ✨
+                </div>
+
+                <div class="comments">
+                    View all 32 comments
+                </div>
+
+                <div class="comment-area">
+
+                    <input
+                        type="text"
+                        placeholder="Add a comment..."
+                    >
+
+                    <button onclick="postComment(this)">
+                        Post
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+                            POST 2
+        ================================================= -->
+
+        <article class="post">
+
+            <div class="post-header">
+
+                <div class="user">
+
+                    <img
+                        class="user-img"
+                        src="https://i.pravatar.cc/100?img=11"
+                    >
+
+                    <div>
+
+                        <div class="username">
+                            cricket_world
+                        </div>
+
+                        <div class="location">
+                            Mumbai, India
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="more">
+                    ⋯
+                </div>
+
+            </div>
+
+            <img
+                class="post-image"
+                src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=900&q=80"
+            >
+
+            <div class="actions">
+
+                <div class="action-left">
+
+                    <span
+                        class="action"
+                        onclick="like(this)"
+                    >
+                        ♡
+                    </span>
+
+                    <span class="action">
+                        💬
+                    </span>
+
+                    <span class="action">
+                        ✈️
+                    </span>
+
+                </div>
+
+                <span class="action">
+                    🔖
+                </span>
+
+            </div>
+
+            <div class="post-details">
+
+                <div class="like-count">
+                    2,891 likes
+                </div>
+
+                <div class="caption">
+                    <b>cricket_world</b>
+                    Cricket is not just a game. It's an emotion! 🏏
+                </div>
+
+                <div class="comments">
+                    View all 87 comments
+                </div>
+
+                <div class="comment-area">
+
+                    <input
+                        type="text"
+                        placeholder="Add a comment..."
+                    >
+
+                    <button onclick="postComment(this)">
+                        Post
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =================================================
+                            POST 3
+        ================================================= -->
+
+        <article class="post">
+
+            <div class="post-header">
+
+                <div class="user">
+
+                    <img
+                        class="user-img"
+                        src="https://i.pravatar.cc/100?img=5"
+                    >
+
+                    <div>
+
+                        <div class="username">
+                            travel_diaries
+                        </div>
+
+                        <div class="location">
+                            Goa, India
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="more">
+                    ⋯
+                </div>
+
+            </div>
+
+            <img
+                class="post-image"
+                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
+            >
+
+            <div class="actions">
+
+                <div class="action-left">
+
+                    <span
+                        class="action"
+                        onclick="like(this)"
+                    >
+                        ♡
+                    </span>
+
+                    <span class="action">
+                        💬
+                    </span>
+
+                    <span class="action">
+                        ✈️
+                    </span>
+
+                </div>
+
+                <span class="action">
+                    🔖
+                </span>
+
+            </div>
+
+            <div class="post-details">
+
+                <div class="like-count">
+                    4,521 likes
+                </div>
+
+                <div class="caption">
+                    <b>travel_diaries</b>
+                    Life is better when you travel 🌊☀️
+                </div>
+
+                <div class="comments">
+                    View all 105 comments
+                </div>
+
+                <div class="comment-area">
+
+                    <input
+                        type="text"
+                        placeholder="Add a comment..."
+                    >
+
+                    <button onclick="postComment(this)">
+                        Post
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </section>
+
+
+    <!-- =====================================================
+                    RIGHT SIDEBAR
+    ====================================================== -->
+
+    <aside class="right-sidebar">
+
+        <!-- PROFILE -->
+
+        <div class="my-profile">
+
+            <div class="profile-info">
+
+                <img
+                    class="profile-img"
+                    src="https://i.pravatar.cc/100?img=12"
+                >
+
+                <div>
+
+                    <div class="profile-name">
+                        lohith_1.43
+                    </div>
+
+                    <div class="real-name">
+                        Lohith
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="switch">
+                Switch
+            </div>
+
+        </div>
+
+
+        <!-- SUGGESTIONS -->
+
+        <div class="suggest-title">
+
+            <span>
+                Suggested for you
+            </span>
+
+            <span>
+                See All
+            </span>
+
+        </div>
+
+
+        <div class="suggestion">
+
+            <div class="suggest-user">
+
+                <img src="https://i.pravatar.cc/100?img=1">
+
+                <div>
+
+                    <div class="suggest-name">
+                        virat_kohli
+                    </div>
+
+                    <div class="suggest-info">
+                        Suggested for you
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button
+                class="follow"
+                onclick="follow(this)"
+            >
